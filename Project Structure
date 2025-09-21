@@ -1,0 +1,21 @@
+FoodLink/
+│
+├── index.html
+├── donor_dashboard.html
+├── ngo_dashboard.html
+├── css/
+│   └── style.css
+├── js/
+│   ├── donor.js
+│   ├── ngo.js
+│   └── main.js
+├── php/
+│   ├── db_connect.php
+│   ├── add_donation.php
+│   ├── fetch_donations.php
+│   ├── claim_donation.php
+│   ├── confirm_pickup.php
+│   └── impact_tracker.php
+├── images/
+├── qr_codes/
+└── README.md
