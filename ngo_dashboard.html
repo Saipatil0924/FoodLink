@@ -1,0 +1,540 @@
+<!-- ngo_dashboard.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NGO Dashboard - FoodLink</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <style>
+        /* ===========================
+   Global Reset & Base Styles
+=========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f7f9fc;
+  color: #333;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ===========================
+   Header
+=========================== */
+header {
+  background: #2d3436;
+  color: #fff;
+  padding: 15px 0;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo i {
+  color: #fdcb6e;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover {
+  color: #fdcb6e;
+}
+
+.auth-buttons .btn {
+  background: transparent;
+  border: 1px solid #fff;
+  padding: 6px 14px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.auth-buttons .btn:hover {
+  background: #fdcb6e;
+  color: #2d3436;
+  border-color: #fdcb6e;
+}
+
+/* ===========================
+   Dashboard Layout
+=========================== */
+.dashboard {
+  padding: 30px 0;
+}
+
+.dashboard-content {
+  display: flex;
+  gap: 20px;
+}
+
+.dashboard-sidebar {
+  flex: 0 0 250px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.sidebar-menu a {
+  display: block;
+  padding: 12px;
+  border-radius: 6px;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 8px;
+  transition: all 0.3s;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+  background: #fdcb6e;
+  color: #2d3436;
+}
+
+.impact-stats {
+  margin-top: 30px;
+}
+
+.impact-stats h3 {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
+}
+
+.impact-stat {
+  margin-bottom: 12px;
+}
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2d3436;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* ===========================
+   Dashboard Main
+=========================== */
+.dashboard-main {
+  flex: 1;
+}
+
+.dashboard-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.dashboard-section h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #2d3436;
+}
+
+/* ===========================
+   Food Listings
+=========================== */
+.food-listings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.food-card {
+  display: flex;
+  background: #fdfdfd;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  transition: transform 0.2s;
+}
+
+.food-card:hover {
+  transform: translateY(-3px);
+}
+
+.food-image {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.food-details {
+  padding: 15px;
+  flex: 1;
+}
+
+.food-title {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: #2d3436;
+}
+
+.food-info span {
+  display: inline-block;
+  margin-right: 12px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.food-description {
+  margin: 10px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.food-actions {
+  display: flex;
+  gap: 8px;
+}
+
+/* ===========================
+   Pickups
+=========================== */
+.pickups-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.pickup-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  background: #fdfdfd;
+  border: 1px solid #eee;
+  padding: 15px;
+  border-radius: 8px;
+}
+
+.pickup-info h4 {
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: #2d3436;
+}
+
+.pickup-info p {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.pickup-status {
+  text-align: right;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+}
+
+.status-scheduled {
+  background: #ffeaa7;
+  color: #2d3436;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #0984e3;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #0767b3;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #0984e3;
+  color: #0984e3;
+}
+
+.btn-outline:hover {
+  background: #0984e3;
+  color: #fff;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+@media (max-width: 900px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+  .dashboard-sidebar {
+    flex: none;
+    width: 100%;
+  }
+}
+
+    </style>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>FoodLink</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="#">Dashboard</a></li>
+                        <li><a href="#">Pickups</a></li>
+                        <li><a href="#">Impact</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="#" class="btn btn-outline">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Dashboard Section -->
+    <section class="dashboard">
+        <div class="container">
+            <h2 class="section-title">NGO Dashboard</h2>
+            
+            <div class="dashboard-content">
+                <div class="dashboard-sidebar">
+                    <div class="sidebar-menu">
+                        <a href="#" class="active"><i class="fas fa-home"></i> Overview</a>
+                        <a href="#"><i class="fas fa-search"></i> Find Donations</a>
+                        <a href="#"><i class="fas fa-truck"></i> Scheduled Pickups</a>
+                        <a href="#"><i class="fas fa-history"></i> Pickup History</a>
+                        <a href="#"><i class="fas fa-chart-line"></i> Impact Report</a>
+                        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                    </div>
+                    
+                    <div class="impact-stats">
+                        <h3>Your Impact</h3>
+                        <div class="impact-stat">
+                            <div class="stat-value">28</div>
+                            <div class="stat-label">Pickups</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="stat-value">450</div>
+                            <div class="stat-label">Meals Provided</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="stat-value">12</div>
+                            <div class="stat-label">Partner Donors</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-main">
+                    <div class="dashboard-section">
+                        <h3>Available Donations Near You</h3>
+                        <div class="food-listings">
+                            <div class="food-card">
+                                <div class="food-image" style="background-color: #ff7675;">
+                                    <i class="fas fa-bread-slice"></i>
+                                </div>
+                                <div class="food-details">
+                                    <h4 class="food-title">Fresh Baked Bread</h4>
+                                    <div class="food-info">
+                                        <span><i class="fas fa-utensils"></i> 20 portions</span>
+                                        <span><i class="fas fa-map-marker-alt"></i> 1.2 km away</span>
+                                    </div>
+                                    <p class="food-description">Freshly baked bread from local bakery. Available for pickup until 7 PM today.</p>
+                                    <div class="food-actions">
+                                        <button class="btn btn-primary">Claim Donation</button>
+                                        <button class="btn btn-outline">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="food-card">
+                                <div class="food-image" style="background-color: #fdcb6e;">
+                                    <i class="fas fa-drumstick-bite"></i>
+                                </div>
+                                <div class="food-details">
+                                    <h4 class="food-title">Prepared Meals</h4>
+                                    <div class="food-info">
+                                        <span><i class="fas fa-utensils"></i> 30 portions</span>
+                                        <span><i class="fas fa-map-marker-alt"></i> 2.3 km away</span>
+                                    </div>
+                                    <p class="food-description">Prepared meals from restaurant. Leftover from today's lunch service.</p>
+                                    <div class="food-actions">
+                                        <button class="btn btn-primary">Claim Donation</button>
+                                        <button class="btn btn-outline">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-section">
+                        <h3>Scheduled Pickups</h3>
+                        <div class="pickups-list">
+                            <div class="pickup-item">
+                                <div class="pickup-info">
+                                    <h4>Fresh Baked Bread</h4>
+                                    <p><i class="fas fa-map-marker-alt"></i> Downtown Bakery</p>
+                                    <p><i class="fas fa-clock"></i> Today, 5:00 PM - 6:00 PM</p>
+                                </div>
+                                <div class="pickup-status">
+                                    <span class="status-badge status-scheduled">Scheduled</span>
+                                    <button class="btn btn-outline">Details</button>
+                                </div>
+                            </div>
+                            
+                            <div class="pickup-item">
+                                <div class="pickup-info">
+                                    <h4>Assorted Fruits</h4>
+                                    <p><i class="fas fa-map-marker-alt"></i> Green Grocers</p>
+                                    <p><i class="fas fa-clock"></i> Tomorrow, 10:00 AM - 11:00 AM</p>
+                                </div>
+                                <div class="pickup-status">
+                                    <span class="status-badge status-scheduled">Scheduled</span>
+                                    <button class="btn btn-outline">Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/ngo.js"></script>
+    <script>
+        // js/ngo.js
+document.addEventListener('DOMContentLoaded', function() {
+    // Handle donation claiming
+    const claimButtons = document.querySelectorAll('.claim-btn');
+    claimButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const donationId = this.getAttribute('data-id');
+            const donationTitle = this.getAttribute('data-title');
+            
+            // In a real app, this would open a modal for scheduling
+            const pickupTime = prompt(`Enter pickup time for ${donationTitle} (e.g., Today 5 PM):`);
+            
+            if (pickupTime) {
+                const claimData = {
+                    donationId: donationId,
+                    ngoId: 1, // This would come from session in a real app
+                    pickupTime: pickupTime
+                };
+                
+                // In a real app, this would be an API call
+                console.log('Claim data:', claimData);
+                alert(`Successfully claimed ${donationTitle} for pickup at ${pickupTime}`);
+                
+                // Update UI
+                this.textContent = 'Claimed';
+                this.disabled = true;
+                this.classList.remove('btn-primary');
+                this.classList.add('btn-outline');
+            }
+        });
+    });
+    
+    // Handle pickup status updates
+    const pickupStatusButtons = document.querySelectorAll('.pickup-status-btn');
+    pickupStatusButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const pickupId = this.getAttribute('data-id');
+            const action = this.getAttribute('data-action');
+            
+            // In a real app, this would be an API call
+            console.log(`Updating pickup ${pickupId} with action: ${action}`);
+            
+            if (action === 'complete') {
+                alert('Pickup marked as completed');
+            } else if (action === 'cancel') {
+                alert('Pickup cancelled');
+            }
+        });
+    });
+    
+    // Search functionality
+    const searchInput = document.getElementById('donation-search');
+    if (searchInput) {
+        searchInput.addEventListener('input', function() {
+            const searchTerm = this.value.toLowerCase();
+            const foodCards = document.querySelectorAll('.food-card');
+            
+            foodCards.forEach(card => {
+                const title = card.querySelector('.food-title').textContent.toLowerCase();
+                const description = card.querySelector('.food-description').textContent.toLowerCase();
+                
+                if (title.includes(searchTerm) || description.includes(searchTerm)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    }
+});
+    </script>
+</body>
+</html>
