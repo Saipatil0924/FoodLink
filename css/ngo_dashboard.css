@@ -1,0 +1,333 @@
+/* ===========================
+   Global Reset & Base Styles
+=========================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Segoe UI", Arial, sans-serif;
+  background: #f7f9fc;
+  color: #333;
+  line-height: 1.6;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
+}
+
+/* ===========================
+   Header
+=========================== */
+header {
+  background: #2d3436;
+  color: #fff;
+  padding: 15px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo {
+  font-size: 1.4rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo i {
+  color: #fdcb6e;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
+}
+
+nav ul li a {
+  color: #fff;
+  font-weight: 500;
+  transition: color 0.3s;
+}
+
+nav ul li a:hover,
+nav ul li a.active {
+  color: #fdcb6e;
+}
+
+.auth-buttons .btn {
+  background: transparent;
+  border: 1px solid #fff;
+  padding: 6px 14px;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 0.9rem;
+  transition: all 0.3s ease;
+}
+
+.auth-buttons .btn:hover {
+  background: #fdcb6e;
+  color: #2d3436;
+  border-color: #fdcb6e;
+}
+
+/* ===========================
+   Dashboard Layout
+=========================== */
+.dashboard {
+  padding: 30px 0;
+}
+
+.section-title {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  color: #2d3436;
+}
+
+.dashboard-content {
+  display: flex;
+  gap: 20px;
+}
+
+.dashboard-sidebar {
+  flex: 0 0 250px;
+  background: #fff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.sidebar-menu a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  border-radius: 6px;
+  color: #333;
+  font-weight: 500;
+  margin-bottom: 8px;
+  transition: all 0.3s;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+  background: #fdcb6e;
+  color: #2d3436;
+}
+
+.impact-stats {
+  margin-top: 30px;
+}
+
+.impact-stats h3 {
+  margin-bottom: 15px;
+  font-size: 1.1rem;
+  border-bottom: 2px solid #eee;
+  padding-bottom: 6px;
+}
+
+.impact-stat {
+  margin-bottom: 12px;
+}
+
+.stat-value {
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #2d3436;
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: #555;
+}
+
+/* ===========================
+   Dashboard Main
+=========================== */
+.dashboard-main {
+  flex: 1;
+}
+
+.dashboard-section {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+}
+
+.dashboard-section h3 {
+  margin-bottom: 15px;
+  font-size: 1.2rem;
+  color: #2d3436;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.search-container {
+  display: flex;
+  margin-bottom: 15px;
+}
+
+.search-container input {
+  flex: 1;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 5px 0 0 5px;
+  font-size: 0.9rem;
+}
+
+.search-container button {
+  padding: 10px 15px;
+  background: #0984e3;
+  color: white;
+  border: none;
+  border-radius: 0 5px 5px 0;
+  cursor: pointer;
+}
+
+/* ===========================
+   Food Listings
+=========================== */
+.food-listings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 15px;
+}
+
+.food-card {
+  display: flex;
+  background: #fdfdfd;
+  border-radius: 10px;
+  overflow: hidden;
+  border: 1px solid #eee;
+  transition: transform 0.2s;
+}
+
+.food-card:hover {
+  transform: translateY(-3px);
+}
+
+.food-image {
+  width: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  color: #fff;
+}
+
+.food-details {
+  padding: 15px;
+  flex: 1;
+}
+
+.food-title {
+  margin-bottom: 8px;
+  font-size: 1.1rem;
+  color: #2d3436;
+}
+
+.food-info span {
+  display: inline-block;
+  margin-right: 12px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.food-description {
+  margin: 10px 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.food-status {
+  margin-top: 10px;
+}
+
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-transform: uppercase;
+}
+
+.status-available {
+  background: #00b894;
+  color: white;
+}
+
+/* ===========================
+   Buttons
+=========================== */
+.btn {
+  border: none;
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.btn-primary {
+  background: #0984e3;
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #0767b3;
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #0984e3;
+  color: #0984e3;
+}
+
+.btn-outline:hover {
+  background: #0984e3;
+  color: #fff;
+}
+
+/* ===========================
+   Responsive
+=========================== */
+@media (max-width: 900px) {
+  .dashboard-content {
+    flex-direction: column;
+  }
+  .dashboard-sidebar {
+    flex: none;
+    width: 100%;
+  }
+
+  .food-card {
+    flex-direction: column;
+  }
+
+  .food-image {
+    width: 100%;
+    padding: 20px 0;
+    font-size: 3rem;
+  }
+}
