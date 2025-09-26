@@ -1,4 +1,10 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+include "php/db.php";
+?>
+
+<?php
 include "php/db.php";
 ?>
 <!DOCTYPE html>

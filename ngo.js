@@ -1,1 +1,0 @@
- # NGO-specific frontend scripts

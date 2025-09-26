@@ -1,4 +1,10 @@
 <?php
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+include "php/db.php";
+?>
+
+<?php
 // Database connection
 include "php/db.php";
 ?>
@@ -10,6 +16,7 @@ include "php/db.php";
     <title>Donor Dashboard - FoodLink</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/donor_dashboard.css">
+
 </head>
 <style>
     /* ===== Donor Dashboard Styles ===== */
@@ -222,7 +229,7 @@ table tr:hover {
                 <!-- Main Dashboard -->
                 <div class="dashboard-main">
                     <div class="dashboard-actions">
-                        <a href="#" class="btn btn-primary"><i class="fas fa-plus"></i> Post New Donation</a>
+                        <a href="php/post_donation.php" class="btn btn-primary">Post New Donation</a>
                     </div>
                     
                     <!-- Active Donations -->
@@ -312,6 +319,18 @@ table tr:hover {
         </div>
     </section>
 
-    <script src="js/donor.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+  const modal = document.getElementById("postDonationModal");
+  const btn = document.getElementById("openPostModal");
+  const span = document.querySelector(".modal .close");
+
+  btn.onclick = () => modal.style.display = "block";
+  span.onclick = () => modal.style.display = "none";
+  window.onclick = (e) => { if (e.target == modal) modal.style.display = "none"; }
+});
+
+    </script>
+
 </body>
 </html>
