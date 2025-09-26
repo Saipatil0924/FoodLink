@@ -14,6 +14,10 @@ include "php/db.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donor Dashboard - FoodLink</title>
+<<<<<<< HEAD
+=======
+    <link rel="stylesheet" href="css/donor_dashboard.css">
+>>>>>>> bd2bbe688a7d45e779659a5818d5d8a65e981e70
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/donor_dashboard.css">
 

@@ -1,10 +1,19 @@
 <?php
+<<<<<<< HEAD
+=======
+
+>>>>>>> c639d5d32f1fe310742692527fde4ce2ed844960
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include "php/db.php";
 ?>
 
 <?php
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> c639d5d32f1fe310742692527fde4ce2ed844960
 include "php/db.php";
 ?>
 <!DOCTYPE html>
@@ -14,7 +23,11 @@ include "php/db.php";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NGO Dashboard - FoodLink</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <link rel="stylesheet" href="css/ngo_dashboard.css">
+
+  <link rel="stylesheet" href="css/style.css">
+
 </head>
 <body>
   <!-- Header -->
