@@ -1,8 +1,5 @@
 <?php
-<<<<<<< HEAD
-=======
-<<<<<<< HEAD
->>>>>>> c639d5d32f1fe310742692527fde4ce2ed844960
+
 include "db.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
