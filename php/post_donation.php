@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 include "db.php";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -45,3 +46,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     </form>
 </body>
 </html>
+=======
+include 'db.php'; // database connection
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $donor_id = 1; // TODO: Replace with logged-in donor's ID from session
+    $food_title = $_POST['food_title'];
+    $quantity = $_POST['quantity'];
+    $pickup_time = $_POST['pickup_time'];
+    $description = $_POST['description'];
+
+    $sql = "INSERT INTO donations (donor_id, food_title, quantity, pickup_time, description) 
+            VALUES ('$donor_id', '$food_title', '$quantity', '$pickup_time', '$description')";
+
+    if ($conn->query($sql) === TRUE) {
+        header("Location: ../donor_dashboard.html?success=1");
+    } else {
+        echo "Error: " . $conn->error;
+    }
+}
+?>
+>>>>>>> bd2bbe688a7d45e779659a5818d5d8a65e981e70
