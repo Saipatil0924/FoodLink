@@ -14,158 +14,317 @@ include "php/db.php";
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Donor Dashboard - FoodLink</title>
-<<<<<<< HEAD
-=======
+
     <link rel="stylesheet" href="css/donor_dashboard.css">
->>>>>>> bd2bbe688a7d45e779659a5818d5d8a65e981e70
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="css/donor_dashboard.css">
 
 </head>
 <style>
-    /* ===== Donor Dashboard Styles ===== */
+/* 🌐 Global Styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  --primary: #007bff;
+  --secondary: #6c757d;
+  --success: #28a745;
+  --danger: #dc3545;
+  --warning: #ffc107;
+  --bg: #f4f6f9;
+  --white: #fff;
+  --dark: #2d3436;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background: #f4f6f9;
-    color: #333;
+  font-family: "Poppins", sans-serif;
+  background: var(--bg);
+  color: var(--dark);
+  line-height: 1.6;
 }
 
-.dashboard-container {
-    max-width: 1200px;
-    margin: auto;
-    padding: 20px;
+/* 🔹 Header */
+header {
+  background: var(--white);
+  padding: 1rem 2rem;
+  box-shadow: var(--shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
 
-h2, h3 {
-    margin-bottom: 15px;
-    color: #2d3436;
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-/* Food Card Styles */
-.food-listings {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 20px;
+.logo {
+  font-weight: 700;
+  font-size: 1.5rem;
+  color: var(--primary);
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
-.food-card {
-    background: #fff;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-    overflow: hidden;
-    transition: transform 0.2s ease;
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 20px;
 }
 
-.food-card:hover {
-    transform: translateY(-4px);
+nav ul li a {
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  transition: color 0.3s;
 }
 
-.food-image {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 120px;
-    font-size: 40px;
-    color: white;
+nav ul li a:hover {
+  color: var(--primary);
 }
 
-.food-details {
-    padding: 15px;
+/* Auth buttons */
+.auth-buttons .btn-outline {
+  border: 1px solid var(--primary);
+  padding: 6px 14px;
+  border-radius: var(--radius);
+  color: var(--primary);
+  transition: all 0.3s;
 }
 
-.food-title {
-    font-size: 18px;
-    font-weight: bold;
-    margin: 0 0 10px;
+.auth-buttons .btn-outline:hover {
+  background: var(--primary);
+  color: var(--white);
 }
 
-.food-info {
-    font-size: 14px;
-    color: #636e72;
-    display: flex;
-    gap: 15px;
-    margin-bottom: 10px;
+/* 🔹 Dashboard Layout */
+.dashboard {
+  padding: 2rem 0;
 }
 
-.food-description {
-    font-size: 14px;
-    margin-bottom: 12px;
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 280px 1fr;
+  gap: 2rem;
 }
 
-/* Status Badges */
-.food-status {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+/* Sidebar */
+.dashboard-sidebar {
+  background: var(--white);
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
 }
 
-.status-badge {
-    padding: 4px 10px;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: bold;
+.sidebar-menu a {
+  display: block;
+  padding: 12px 15px;
+  margin-bottom: 8px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  color: var(--dark);
+  font-weight: 500;
+  transition: background 0.3s;
 }
 
-.status-available {
-    background: #55efc4;
-    color: #00695c;
-}
-.status-claimed {
-    background: #ffeaa7;
-    color: #6d4c41;
-}
-.status-completed {
-    background: #fab1a0;
-    color: #c62828;
+.sidebar-menu a:hover {
+  background: #f1f5ff;
+  color: var(--primary);
 }
 
-/* Buttons */
+.sidebar-menu a.active {
+  background: var(--primary);
+  color: var(--white);
+}
+
+/* Impact Stats */
+.impact-stats h3 {
+  margin-bottom: 1rem;
+  font-size: 1.2rem;
+}
+
+.impact-stat {
+  background: #f8f9fa;
+  padding: 12px;
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  text-align: center;
+  transition: transform 0.3s;
+}
+
+.impact-stat:hover {
+  transform: translateY(-4px);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
+.stat-label {
+  font-size: 0.9rem;
+  color: var(--secondary);
+}
+
+/* 🔹 Dashboard Main */
+.dashboard-main {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.dashboard-actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
 .btn {
-    padding: 6px 12px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
-    border: none;
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.btn-primary {
+  background: var(--primary);
+  color: var(--white);
+}
+
+.btn-primary:hover {
+  background: #0056b3;
 }
 
 .btn-outline {
-    border: 1px solid #0984e3;
-    background: transparent;
-    color: #0984e3;
-    transition: 0.2s;
+  border: 1px solid var(--secondary);
+  color: var(--secondary);
+  background: transparent;
 }
 
 .btn-outline:hover {
-    background: #0984e3;
-    color: white;
+  background: var(--secondary);
+  color: var(--white);
 }
 
-/* Recent Donations Table */
-table {
-    width: 100%;
-    border-collapse: collapse;
-    background: #fff;
-    margin-top: 15px;
-    border-radius: 8px;
-    overflow: hidden;
+/* 🔹 Active Donations */
+.food-listings {
+  display: grid;
+  gap: 1.5rem;
 }
 
-table th, table td {
-    padding: 12px 15px;
-    border-bottom: 1px solid #ddd;
-    text-align: left;
+.food-card {
+  display: flex;
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s;
 }
 
-table th {
-    background: #0984e3;
-    color: white;
+.food-card:hover {
+  transform: translateY(-6px);
 }
 
-table tr:hover {
-    background: #f1f2f6;
+.food-image {
+  flex: 0 0 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--white);
+  font-size: 2rem;
 }
+
+.food-details {
+  flex: 1;
+  padding: 1rem;
+}
+
+.food-title {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.food-info {
+  font-size: 0.9rem;
+  color: var(--secondary);
+  display: flex;
+  gap: 15px;
+  margin-bottom: 0.5rem;
+}
+
+.food-description {
+  font-size: 0.95rem;
+  margin-bottom: 1rem;
+}
+
+.food-status {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Status Badges */
+.status-badge {
+  padding: 4px 10px;
+  border-radius: var(--radius);
+  font-size: 0.85rem;
+  font-weight: 500;
+}
+
+.status-available { background: var(--success); color: var(--white); }
+.status-claimed { background: var(--warning); color: var(--dark); }
+.status-completed { background: var(--secondary); color: var(--white); }
+
+/* 🔹 Recent Donations Table */
+.donations-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: var(--white);
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+.donations-table th,
+.donations-table td {
+  padding: 12px 16px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
+}
+
+.donations-table th {
+  background: #f1f5ff;
+  font-weight: 600;
+}
+
+.donations-table tr:hover {
+  background: #f9fbff;
+}
+
+.text-muted {
+  text-align: center;
+  color: var(--secondary);
+}
+
+/* 🔹 Responsive */
+@media (max-width: 992px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+}
+
 
 </style>
 <body>
@@ -202,7 +361,7 @@ table tr:hover {
                 <div class="dashboard-sidebar">
                     <div class="sidebar-menu">
                         <a href="#" class="active"><i class="fas fa-home"></i> Overview</a>
-                        <a href="#"><i class="fas fa-plus-circle"></i> Post Donation</a>
+                        <<a href="php/post_donation.php" class="btn btn-primary"></i> Post Donation</a>
                         <a href="#"><i class="fas fa-history"></i> Donation History</a>
                         <a href="#"><i class="fas fa-chart-line"></i> Impact Report</a>
                         <a href="#"><i class="fas fa-cog"></i> Settings</a>

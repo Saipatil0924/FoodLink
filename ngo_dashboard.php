@@ -23,6 +23,9 @@ include "php/db.php";
 
 </head>
 <body>
+  <style>
+    
+  </style>
   <!-- Header -->
   <header>
     <div class="container">
