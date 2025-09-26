@@ -1,13 +1,13 @@
 <?php
-<<<<<<< HEAD
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 include "php/db.php";
 ?>
 
 <?php
-=======
->>>>>>> bd2bbe688a7d45e779659a5818d5d8a65e981e70
+
+
 include "php/db.php";
 ?>
 <!DOCTYPE html>
@@ -17,11 +17,11 @@ include "php/db.php";
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>NGO Dashboard - FoodLink</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-<<<<<<< HEAD
+
   <link rel="stylesheet" href="css/ngo_dashboard.css">
-=======
+
   <link rel="stylesheet" href="css/style.css">
->>>>>>> bd2bbe688a7d45e779659a5818d5d8a65e981e70
+
 </head>
 <body>
   <!-- Header -->
