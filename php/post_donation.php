@@ -1,48 +1,47 @@
 <?php
-include "php/db.php";
+include "db.php";
 
-if(isset($_POST['submit'])) {
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $food_item = $_POST['food_item'];
     $quantity = $_POST['quantity'];
     $pickup_time = $_POST['pickup_time'];
     $description = $_POST['description'];
+    $status = "Available";
 
-    $sql = "INSERT INTO donations (food_item, quantity, pickup_time, description, status, created_at) 
-            VALUES ('$food_item', '$quantity', '$pickup_time', '$description', 'Available', NOW())";
+    $stmt = $conn->prepare("INSERT INTO donations (food_item, quantity, pickup_time, description, status, created_at) VALUES (?, ?, ?, ?, ?, NOW())");
+    $stmt->bind_param("sisss", $food_item, $quantity, $pickup_time, $description, $status);
 
-    if($conn->query($sql)) {
-        echo "<script>alert('Donation posted successfully'); window.location='ngo_dashboard.php';</script>";
+    if ($stmt->execute()) {
+        echo "Donation posted successfully!";
     } else {
-        echo "Error: " . $conn->error;
+        echo "Error: " . $stmt->error;
     }
+    $stmt->close();
 }
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Post Donation - FoodLink</title>
-<link rel="stylesheet" href="css/donor_dashboard.css">
+    <meta charset="UTF-8">
+    <title>Post Donation</title>
 </head>
 <body>
-<div class="container">
-    <h2>Post New Donation</h2>
+    <h2>Post a New Donation</h2>
     <form method="POST">
-        <label>Food Item:</label>
+        <label>Food Item:</label><br>
         <input type="text" name="food_item" required><br><br>
 
-        <label>Quantity:</label>
+        <label>Quantity:</label><br>
         <input type="number" name="quantity" required><br><br>
 
-        <label>Pickup Time:</label>
+        <label>Pickup Time:</label><br>
         <input type="datetime-local" name="pickup_time" required><br><br>
 
-        <label>Description:</label>
-        <textarea name="description"></textarea><br><br>
+        <label>Description:</label><br>
+        <textarea name="description" required></textarea><br><br>
 
-        <button type="submit" name="submit" class="btn btn-primary">Post Donation</button>
+        <button type="submit">Post Donation</button>
     </form>
-</div>
 </body>
 </html>
