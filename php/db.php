@@ -1,15 +1,12 @@
 <?php
-$servername = "localhost";      // Usually localhost
-$username = "root";             // Your MySQL username
-$password = "";                 // Your MySQL password
-$database = "foodlink_db";      // Database name
+$servername = "localhost";
+$username = "root";   // your MySQL username
+$password = "";       // your MySQL password
+$dbname = "foodlink_db"; // your database name
 
-// Create connection
-$conn = new mysqli($servername, $username, $password, $database);
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-// Check connection
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
-// echo "Connected successfully";
 ?>
