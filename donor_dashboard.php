@@ -7,31 +7,6 @@ ini_set('display_errors', 1);
 // Note: You only need to include the database connection once.
 include "php/db.php"; 
 
-// ... (Security checks)
-
-// Step 1: Get the logged-in user's ID from the session
-$donor_id = $_SESSION['user_id'];
-
-// Step 2: Use the user's ID in the 'WHERE' clause to filter results
-$sql = "SELECT food_name, quantity, status 
-        FROM donations 
-        WHERE donor_id = ?"; // This is the crucial part!
-
-$stmt = $conn->prepare($sql);
-
-// Step 3: Bind the user's ID to the query
-$stmt->bind_param("i", $donor_id);
-$stmt->execute();
-$result = $stmt->get_result();
-
-// Now, $result contains ONLY the donations made by the logged-in user
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        // Display the user's personal donation data
-        echo "<div>" . htmlspecialchars($row['food_name']) . "</div>";
-    }
-}
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
