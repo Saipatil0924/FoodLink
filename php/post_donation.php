@@ -1,6 +1,32 @@
 <?php
+session_start();
 //donation
 include "db.php";
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    // Get the donation details from the form
+    $food_name = $_POST['food_name'];
+    $quantity = $_POST['quantity'];
+    // ... other form fields
+
+    // Step 1: Get the logged-in user's ID from the session
+    $donor_id = $_SESSION['user_id'];
+
+    // Step 2: Include the user's ID in the INSERT query
+    $stmt = $conn->prepare(
+        "INSERT INTO donations (food_name, quantity, donor_id) VALUES (?, ?, ?)"
+    );
+    
+    // Step 3: Bind the user's ID along with the other data
+    // The "i" in "ssi" stands for integer, for the donor_id
+    $stmt->bind_param("ssi", $food_name, $quantity, $donor_id);
+    
+    // When this executes, the new donation is permanently linked to the user
+    if ($stmt->execute()) {
+        header("Location: donor_dashboard.php");
+        exit();
+    }
+}
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $food_item = $_POST['food_item'];

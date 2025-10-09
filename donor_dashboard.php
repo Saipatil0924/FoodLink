@@ -1,8 +1,37 @@
+
+
 <?php
+session_start();
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
 // Note: You only need to include the database connection once.
 include "php/db.php"; 
+
+// ... (Security checks)
+
+// Step 1: Get the logged-in user's ID from the session
+$donor_id = $_SESSION['user_id'];
+
+// Step 2: Use the user's ID in the 'WHERE' clause to filter results
+$sql = "SELECT food_name, quantity, status 
+        FROM donations 
+        WHERE donor_id = ?"; // This is the crucial part!
+
+$stmt = $conn->prepare($sql);
+
+// Step 3: Bind the user's ID to the query
+$stmt->bind_param("i", $donor_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+// Now, $result contains ONLY the donations made by the logged-in user
+if ($result->num_rows > 0) {
+    while ($row = $result->fetch_assoc()) {
+        // Display the user's personal donation data
+        echo "<div>" . htmlspecialchars($row['food_name']) . "</div>";
+    }
+}
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -371,7 +400,7 @@ nav ul li a:hover {
                     <div class="sidebar-menu">
                         <a href="#" class="active"><i class="fas fa-home"></i> Overview</a>
                         <a href="php/post_donation.php"><i class="fas fa-plus-circle"></i> Post Donation</a>
-                        <a href="#"><i class="fas fa-history"></i> Donation History</a>
+                        <a href="php/donation_history.php"><i class="fas fa-history"></i> Donation History</a>
                         <a href="php/impact_report.php"><i class="fas fa-chart-line"></i> Impact Report</a>
                         <a href="#"><i class="fas fa-cog"></i> Settings</a>
                     </div>
@@ -434,7 +463,7 @@ nav ul li a:hover {
                                                 <span class='status-badge $status_class'>{$row['status']}</span>
                                                 
                                                 <div class='card-actions'>
-                                                    <button class='btn btn-outline'>Edit</button>
+                                                    <button class='btn btn-outline' action='php/edit_donation.php' >Edit</button>
                                                     
                                                     <form action='php/delete_post.php' method='POST' onsubmit=\"return confirm('Are you sure you want to delete this donation post?');\">
                                                         <input type='hidden' name='donation_id' value='{$row['id']}'>
