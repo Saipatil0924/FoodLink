@@ -115,7 +115,7 @@ $recent = $conn->query("
             <?php while($row = $recent->fetch_assoc()): ?>
             <tr>
               <td><?= htmlspecialchars($row['donor_name'] ?? '—') ?></td>
-              <td><?= htmlspecialchars($row['food_type']) ?></td>
+              <td><?= htmlspecialchars($row['food_name']) ?></td>
               <td><?= htmlspecialchars($row['quantity']) ?></td>
               <td><?= htmlspecialchars($row['ngo_name'] ?? 'Pending') ?></td>
               <td><span class="badge bg-<?= $row['status']=='Delivered'?'success':'warning' ?>"><?= $row['status'] ?></span></td>

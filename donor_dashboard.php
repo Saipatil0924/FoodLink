@@ -1,11 +1,21 @@
 <?php
 session_start();
+// SECURITY FIX: Redirects to login page if user is not a logged-in donor.
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'donor') {
+    header("Location: login.php");
+    exit();
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-// Note: You only need to include the database connection once.
 include "php/db.php"; 
 
+// Get the logged-in user's ID to fetch their specific data
+$donor_id = $_SESSION['user_id'];
 ?>
+
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>

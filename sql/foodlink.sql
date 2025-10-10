@@ -2,7 +2,7 @@
 -- Create Database
 -- ----------------------------------------
 CREATE DATABASE IF NOT EXISTS foodlink;
-USE foodlink;
+USE foodlink_db;
 
 -- ----------------------------------------
 -- Users Table
