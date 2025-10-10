@@ -1,11 +1,148 @@
 <?php
 session_start();
+// SECURITY FIX: Redirects to login page if user is not a logged-in donor.
+if (!isset($_SESSION['user_id']) || $_SESSION['user_type'] != 'donor') {
+    header("Location: login.php");
+    exit();
+}
+
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
-// Note: You only need to include the database connection once.
 include "php/db.php"; 
 
+// Get the logged-in user's ID to fetch their specific data
+$donor_id = $_SESSION['user_id'];
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Donor Dashboard - FoodLink</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/donor_dashboard.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i class="fas fa-utensils"></i>
+                    <span>FoodLink</span>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="donor_dashboard.php">Dashboard</a></li>
+                        <li><a href="php/donation_history.php">Donations</a></li>
+                        <li><a href="php/impact_report.php">Impact</a></li>
+                    </ul>
+                </nav>
+                <div class="auth-buttons">
+                    <a href="logout.php" class="btn btn-outline">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section class="dashboard">
+        <div class="container">
+            <h2 class="section-title">Donor Dashboard</h2>
+            
+            <div class="dashboard-content">
+                <div class="dashboard-sidebar">
+                    <div class="sidebar-menu">
+                        <a href="donor_dashboard.php" class="active"><i class="fas fa-home"></i> Overview</a>
+                        <a href="php/post_donation.php"><i class="fas fa-plus-circle"></i> Post Donation</a>
+                        <a href="php/donation_history.php"><i class="fas fa-history"></i> Donation History</a>
+                        <a href="php/impact_report.php"><i class="fas fa-chart-line"></i> Impact Report</a>
+                        <a href="#"><i class="fas fa-cog"></i> Settings</a>
+                    </div>
+                    
+                    <div class="impact-stats">
+                        <h3>Your Impact</h3>
+                        <?php
+                        // DATA LEAK FIX: Queries now use the specific $donor_id
+                        $stmt_donations = $conn->prepare("SELECT COUNT(*) as total FROM donations WHERE donor_id = ?");
+                        $stmt_donations->bind_param("i", $donor_id);
+                        $stmt_donations->execute();
+                        $donationsCount = $stmt_donations->get_result()->fetch_assoc()['total'] ?: 0;
+                        $stmt_donations->close();
+
+                        // NOTE: SUM on a VARCHAR field like 'quantity' is not ideal. This assumes quantity is stored as a number.
+                        $stmt_meals = $conn->prepare("SELECT SUM(CAST(quantity AS UNSIGNED)) as total FROM donations WHERE donor_id = ?");
+                        $stmt_meals->bind_param("i", $donor_id);
+                        $stmt_meals->execute();
+                        $mealsCount = $stmt_meals->get_result()->fetch_assoc()['total'] ?: 0;
+                        $stmt_meals->close();
+                        ?>
+                        <div class="impact-stat">
+                            <div class="stat-value"><?php echo $donationsCount; ?></div>
+                            <div class="stat-label">Donations Made</div>
+                        </div>
+                        <div class="impact-stat">
+                            <div class="stat-value"><?php echo $mealsCount; ?></div>
+                            <div class="stat-label">Meals Provided</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="dashboard-main">
+                    <div class="dashboard-actions">
+                        <a href="php/post_donation.php" class="btn btn-primary">Post New Donation</a>
+                    </div>
+                    
+                    <div class="dashboard-section">
+                        <h3>Active Donations</h3>
+                        <div class="food-listings">
+                            <?php
+                            // DATA LEAK FIX: Fetches only the logged-in user's donations
+                            $sql = "SELECT * FROM donations WHERE donor_id = ? AND status NOT IN ('completed', 'cancelled') ORDER BY created_at DESC LIMIT 5";
+                            $stmt = $conn->prepare($sql);
+                            $stmt->bind_param("i", $donor_id);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+
+                            if ($result->num_rows > 0) {
+                                while ($row = $result->fetch_assoc()) {
+                                    $status_class = "status-" . htmlspecialchars($row['status']);
+
+                                    // ERROR FIX: Changed 'food_item' to 'food_name' and 'pickup_time' to 'expiry_time'
+                                    echo "
+                                    <div class='food-card'>
+                                        <div class='food-details'>
+                                            <h4 class='food-title'>" . htmlspecialchars($row['food_name']) . "</h4>
+                                            <div class='food-info'>
+                                                <span><i class='fas fa-box'></i> " . htmlspecialchars($row['quantity']) . "</span>
+                                                <span><i class='fas fa-clock'></i> Expires: " . date("M d, Y g:i A", strtotime($row['expiry_time'])) . "</span>
+                                            </div>
+                                            <p class='food-description'>" . htmlspecialchars($row['description']) . "</p>
+                                            <div class='food-status'>
+                                                <span class='status-badge " . $status_class . "'>" . htmlspecialchars(ucfirst($row['status'])) . "</span>
+                                                <div class='card-actions'>
+                                                    <form action='php/delete_post.php' method='POST' onsubmit=\"return confirm('Are you sure you want to delete this donation post?');\">
+                                                        <input type='hidden' name='donation_id' value='{$row['id']}'>
+                                                        <button type='submit' name='delete_post' class='btn btn-danger'>Delete</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>";
+                                }
+                            } else {
+                                echo "<p class='text-muted'>No active donations yet. Post your first donation!</p>";
+                            }
+                            $stmt->close();
+                            ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="en">
 <head>
