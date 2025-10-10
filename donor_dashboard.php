@@ -426,7 +426,7 @@ nav ul li a:hover {
                                             <i class='fas fa-utensils'></i>
                                         </div>
                                         <div class='food-details'>
-                                            <h4 class='food-title'>{$row['food_item']}</h4>
+                                            <h4 class='food-title'>{$row['food_name']}</h4>
                                             <div class='food-info'>
                                                 <span><i class='fas fa-utensils'></i> {$row['quantity']}</span>
                                                 <span><i class='fas fa-clock'></i> Pickup by {$row['pickup_time']}</span>
@@ -479,7 +479,7 @@ nav ul li a:hover {
 
                                         echo "
                                         <tr>
-                                            <td>{$row['food_item']}</td>
+                                            <td>{$row['food_name']}</td>
                                             <td>{$row['quantity']}</td>
                                             <td><span class='status-badge $status_class'>{$row['status']}</span></td>
                                             <td>".date("M d, Y", strtotime($row['created_at']))."</td>

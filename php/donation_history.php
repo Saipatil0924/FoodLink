@@ -78,7 +78,7 @@ include "db.php";
 
                             echo "
                             <tr>
-                                <td>" . htmlspecialchars($row['food_item']) . "</td>
+                                <td>" . htmlspecialchars($row['food_name']) . "</td>
                                 <td>" . htmlspecialchars($row['quantity']) . "</td>
                                 <td><span class='status-badge $status_class'>" . htmlspecialchars($row['status']) . "</span></td>
                                 <td>" . date("M d, Y, g:i A", strtotime($row['created_at'])) . "</td>

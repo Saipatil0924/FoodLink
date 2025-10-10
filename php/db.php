@@ -2,7 +2,7 @@
 $servername = "localhost";
 $username = "root";   // your MySQL username
 $password = "";       // your MySQL password
-$dbname = "foodlink_db"; // your database name
+$dbname = "foodlink"; // your database name
 
 $conn = new mysqli($servername, $username, $password, $dbname);
 
