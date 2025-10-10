@@ -1,45 +1,38 @@
-// main.js
-// Counter animation for impact stats
+// In main.js
+// Handles animations and smooth scrolling for the landing page.
+
 document.addEventListener('DOMContentLoaded', function() {
-    // Animate stats counters
+    // --- Counter Animation (Corrected Logic) ---
     const counters = document.querySelectorAll('.stat-number');
-    const speed = 200; // The lower the slower
     
     counters.forEach(counter => {
-        const target = +counter.getAttribute('data-target');
-        const count = +counter.innerText;
-        const increment = target / speed;
-        
-        if (count < target) {
-            counter.innerText = Math.ceil(count + increment);
-            setTimeout(updateCounter, 1);
-        } else {
-            counter.innerText = target;
-        }
-        
-        function updateCounter() {
-            const current = +counter.innerText;
-            if (current < target) {
-                counter.innerText = Math.ceil(current + increment);
-                setTimeout(updateCounter, 1);
+        // This function handles the animation for a single counter.
+        const updateCounter = () => {
+            const target = +counter.getAttribute('data-target');
+            const count = +counter.innerText;
+            const increment = target / 200; // Animation speed
+
+            if (count < target) {
+                counter.innerText = Math.ceil(count + increment);
+                setTimeout(updateCounter, 10); // Update every 10ms
             } else {
                 counter.innerText = target;
             }
-        }
+        };
+        // Start the animation.
+        updateCounter();
     });
-    
-    // Smooth scrolling for anchor links
+
+    // --- Smooth Scrolling (No changes needed, already correct) ---
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             e.preventDefault();
-            
             const targetId = this.getAttribute('href');
             if (targetId === '#') return;
-            
             const targetElement = document.querySelector(targetId);
             if (targetElement) {
                 window.scrollTo({
-                    top: targetElement.offsetTop - 80,
+                    top: targetElement.offsetTop - 80, // Offset for sticky header
                     behavior: 'smooth'
                 });
             }
